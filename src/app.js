@@ -3,14 +3,16 @@ import cors    from 'cors'
 import logger  from 'morgan'
 import router  from './routes/index.js'
 import { errorLogger, errorResponder } from './middlewares/error.js'
+import sequelize from './config/database/mysql.js'
 
 const app = express()
 
-// mysql
-import myDataSource from './config/database/mysql.js'
-myDataSource.initialize().then(() => {
-  console.log('Data Source has been initialized!')
-})
+try {
+  await sequelize.authenticate();
+  console.log('Connection has been established successfully.');
+} catch (error) {
+  console.error('Unable to connect to the database:', error);
+}
 
 app.use(cors())
 app.use(logger('combined'))
