@@ -1,13 +1,13 @@
-const express = require('express')
-const cors    = require('cors')
-const logger  = require('morgan')
-const router  = require('./routes')
-const { errorLogger, errorResponder } = require('./middlewares/error')
+import express from 'express'
+import cors    from 'cors'
+import logger  from 'morgan'
+import router  from './routes/index.js'
+import { errorLogger, errorResponder } from './middlewares/error.js'
 
 const app = express()
 
 // mysql
-const { myDataSource } = require('./config/database/mysql')
+import myDataSource from './config/database/mysql.js'
 myDataSource.initialize().then(() => {
   console.log('Data Source has been initialized!')
 })
@@ -19,4 +19,4 @@ app.use(errorLogger)
 app.use(errorResponder)
 app.use(router)
 
-module.exports = app
+export default app

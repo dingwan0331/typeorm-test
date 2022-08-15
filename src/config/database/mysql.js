@@ -1,5 +1,5 @@
-const dotenv = require("dotenv");
-const { DataSource } = require("typeorm");
+import dotenv from "dotenv"
+import { DataSource } from "typeorm"
 
 dotenv.config();
 
@@ -13,4 +13,4 @@ const myDataSource = new DataSource({
   entities : ['../../entities']
 });
 
-module.exports = { myDataSource };
+export default myDataSource
