@@ -1,16 +1,20 @@
 import dotenv from "dotenv"
 import { DataSource } from "typeorm"
+import Sequelize from 'sequelize'
 
 dotenv.config();
 
-const myDataSource = new DataSource({
-  type     : process.env.MYSQL_CONNECTION,
-  host     : process.env.MYSQL_HOST,
-  port     : process.env.MYSQL_PORT,
-  username : process.env.MYSQL_USERNAME,
-  password : process.env.MYSQL_PASSWORD,
-  database : process.env.MYSQL_DATABASE,
-  entities : ['../../entities']
-});
+const databse  = process.env.MYSQL_DATABASE
+const username = process.env.MYSQL_USERNAME
+const password = process.env.MYSQL_PASSWORD
+const host     = process.env.MYSQL_HOST
+const dialect  = process.env.MYSQL_DIALECT
 
-export default myDataSource
+const sequelize = new Sequelize(
+  databse, username, password, {
+    host: host,
+    dialect: dialect
+  }
+)
+
+export default sequelize
