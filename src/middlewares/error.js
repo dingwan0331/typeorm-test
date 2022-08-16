@@ -10,4 +10,4 @@ const errorResponder = (err, req, res, next) => {
   )
 }
 
- export { errorLogger, errorResponder }
+module.exports = { errorLogger, errorResponder }

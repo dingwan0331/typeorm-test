@@ -1,18 +1,16 @@
-import express from 'express'
-import cors    from 'cors'
-import logger  from 'morgan'
-import router  from './routes/index.js'
-import { errorLogger, errorResponder } from './middlewares/error.js'
-import sequelize from './config/database/mysql.js'
+const express = require('express')
+const cors    = require('cors')
+const logger  = require('morgan')
+const router  = require('./routes')
+const { errorLogger, errorResponder } = require('./middlewares/error')
+const { sequelize } = require('./database/models')
 
 const app = express()
 
-try {
-  await sequelize.authenticate();
-  console.log('Connection has been established successfully.');
-} catch (error) {
-  console.error('Unable to connect to the database:', error);
-}
+sequelize
+  .sync({ force: false })
+  .then(() => console.log('connected database'))
+  .catch(err => console.error('occurred error in database connecting', err))
 
 app.use(cors())
 app.use(logger('combined'))
@@ -21,4 +19,4 @@ app.use(errorLogger)
 app.use(errorResponder)
 app.use(router)
 
-export default app
+module.exports = app
